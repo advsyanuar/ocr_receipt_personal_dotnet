@@ -12,6 +12,7 @@ public class OCRProcessesController(AppDbContext context, ILogger<OCRProcessesCo
     private readonly ILogger<OCRProcessesController> _logger = logger;
 
     [HttpGet]
+    [Tags("GetAllData")]
     public async Task<IActionResult> Get()
     {
         var data = await _context.OCRProcesses.ToListAsync();

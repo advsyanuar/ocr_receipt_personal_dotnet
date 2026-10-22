@@ -5,7 +5,7 @@ using ocr_receipt.Models;
 namespace ocr_receipt.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route("api/v1/ocr")]
 public class OCRProcessesController(AppDbContext context, ILogger<OCRProcessesController> logger) : ControllerBase
 {
     private readonly AppDbContext _context = context;

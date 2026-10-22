@@ -1,0 +1,6 @@
+@ocr_receipt_HostAddress = http://localhost:5218
+
+GET {{ocr_receipt_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

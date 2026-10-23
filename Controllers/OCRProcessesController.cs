@@ -19,6 +19,28 @@ public class OCRProcessesController(AppDbContext context, ILogger<OCRProcessesCo
         return Ok(data);
     }
 
+    [HttpGet("{id:int}/image")]
+    public async Task<IActionResult> GetImage([FromRoute] int id)
+    {
+        var item = await _context.OCRProcesses.FindAsync(id);
+        if (item == null || string.IsNullOrEmpty(item.ImagePath))
+            return NotFound();
+        // 1. Extract the file name (e.g. 9613318a-62cd-4401-9a67-eca48f858008.jpeg)
+        var fileName = Path.GetFileName(item.ImagePath);
+        // 2. Resolve to the path inside the Docker container
+        var containerPath = Path.Combine("/Uploads", fileName);
+        if (System.IO.File.Exists(containerPath))
+        {
+            return PhysicalFile(containerPath, "image/jpeg");
+        }
+        // 3. Fallback check for running directly on host without Docker
+        if (System.IO.File.Exists(item.ImagePath))
+        {
+            return PhysicalFile(item.ImagePath, "image/jpeg");
+        }
+        return NotFound();
+    }
+
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {

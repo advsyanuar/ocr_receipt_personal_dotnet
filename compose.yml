@@ -1,0 +1,16 @@
+services:
+  ocr-receipt-service:
+    build: .
+    image: ocr-receipt
+    container_name: ocr-receipt-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5218
+      - ConnectionStrings__DefaultConnection=Host=host.docker.internal;Port=5432;Database=ocr_project;Username=admin;Password=!Fuckers|+|888
+    ports:
+      - "5218:5218"
+    volumes:
+      - /home/manonthemoon/Projects/OCR-SHARED/Uploads:/Uploads
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

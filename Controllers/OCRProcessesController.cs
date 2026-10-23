@@ -41,6 +41,27 @@ public class OCRProcessesController(AppDbContext context, ILogger<OCRProcessesCo
         return NotFound();
     }
 
+    [HttpGet("{id:int}/text")]
+    public async Task<IActionResult> GetText([FromRoute] int id)
+    {
+        var item = await _context.OCRProcesses.FindAsync(id);
+        if (item == null || string.IsNullOrEmpty(item.RawTextPath))
+            return NotFound();
+
+        var fileName = Path.GetFileName(item.RawTextPath);
+        var containerPath = Path.Combine("/Parsed", fileName);
+        if (System.IO.File.Exists(containerPath))
+        {
+            return PhysicalFile(containerPath, "text/plain");
+        }
+
+        if (System.IO.File.Exists(item.RawTextPath))
+        {
+            return PhysicalFile(item.RawTextPath, "text/plain");
+        }
+        return NotFound();
+    }
+
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {

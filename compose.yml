@@ -11,6 +11,7 @@ services:
       - "5218:5218"
     volumes:
       - /home/manonthemoon/Projects/OCR-SHARED/Uploads:/Uploads
+      - /home/manonthemoon/Projects/OCR-SHARED/Parsed:/Parsed
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped

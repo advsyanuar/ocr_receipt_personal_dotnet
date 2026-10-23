@@ -10,6 +10,11 @@ Accept: application/json
 
 ###
 
+GET {{ocr_receipt_HostAddress}}/api/v1/ocr/{id}/text
+Accept: application/json
+
+###
+
 PATCH {{ocr_receipt_HostAddress}}/api/v1/ocr/{id}
 Accept: application/json
 
